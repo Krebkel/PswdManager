@@ -15,15 +15,20 @@ public interface IPasswordEntryService
     Task<PasswordEntryUpdateResult> UpdatePasswordEntryAsync(UpdatePasswordEntryRequest passwordEntry, CancellationToken cancellationToken);
     
     /// <summary>
-    /// Получить все запись пароляы
+    /// Получить все записи паролей
     /// </summary>
     Task<PasswordEntry[]> GetAllPasswordEntriesAsync();
     
     /// <summary>
-    /// Удалить запись пароля
+    /// Удалить запись пароля по ID
     /// </summary>
     Task DeletePasswordEntryAsync(int id, CancellationToken cancellationToken);
 
+    /// <summary>
+    /// Получить запись пароля по ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     Task<PasswordEntry> GetPasswordEntryAsync(int id);
 
 }

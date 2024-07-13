@@ -112,8 +112,21 @@ public class PasswordEntryController : ControllerBase
     {
         try
         {
+            var passwordEntries = await _passwordEntryService.GetAllPasswordEntriesAsync();
             var result = new List<ApiPasswordEntry>();
 
+            foreach (var passwordEntry in passwordEntries)
+            {
+                result.Add(new ApiPasswordEntry()
+                {
+                    Id = passwordEntry.Id,
+                    Name = passwordEntry.Name,
+                    Password = passwordEntry.Password,
+                    DateAdded = passwordEntry.DateAdded,
+                    IsEmail = passwordEntry.IsEmail
+                });
+            }
+            
             return Ok(result.ToArray());
         }
         catch (Exception e)
