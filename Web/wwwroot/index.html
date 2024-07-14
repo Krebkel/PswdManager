@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Менеджер паролей</title>
+    <link rel="stylesheet" href="./libs/bootstrap.css">
+    <link rel="stylesheet" href="./libs/awesome_6.0.0_css_all.css">
+    <style>
+        .password-hidden {
+            -webkit-text-security: disc;
+            text-security: disc;
+        }
+        .password-cell {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Менеджер паролей</h1>
+
+    <div class="mb-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="Поиск...">
+    </div>
+
+    <button id="addEntryBtn" class="btn btn-primary mb-3">Добавить запись</button>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Пароль</th>
+            <th>Дата добавлениия</th>
+        </tr>
+        </thead>
+        <tbody id="entriesTableBody">
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="entryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавить запись</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="entryForm">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Название</label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Пароль</label>
+                        <input type="password" class="form-control" id="password" required minlength="8">
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="entryType" id="websiteType" value="website" checked>
+                            <label class="form-check-label" for="websiteType">Сайт</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="entryType" id="emailType" value="email">
+                            <label class="form-check-label" for="emailType">Email</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelEntryBtn">Отмена</button>
+                <button type="button" class="btn btn-primary" id="saveEntryBtn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- jquery+bootstrap  -->
+<script src="./libs/jquery.js"></script>
+<script src="./libs/popper.js"></script>
+<script src="./libs/bootstrap.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -39,6 +39,8 @@ app.UseEndpoints(endpoints =>
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseHttpsRedirection();
+
 app.UseDefaultFiles()
     .UseStaticFiles(new StaticFileOptions
     {
