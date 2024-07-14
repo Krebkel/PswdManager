@@ -96,8 +96,9 @@ function validateEmail(email) {
 
 function filterEntries() {
     const searchText = $("#searchInput").val().toLowerCase();
-    $("#entriesTableBody tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+    $("#entriesTableBody tr").each(function() {
+        const entryName = $(this).find('td').eq(0).text().toLowerCase();
+        $(this).toggle(entryName.indexOf(searchText) > -1);
     });
 }
 
