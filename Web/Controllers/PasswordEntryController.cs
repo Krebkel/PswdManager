@@ -23,7 +23,6 @@ public class PasswordEntryController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PasswordEntryController))]
     public async Task<IActionResult> AddPasswordEntry([FromBody] AddPasswordEntryApiRequest apiRequest, CancellationToken ct)
     {
         try
