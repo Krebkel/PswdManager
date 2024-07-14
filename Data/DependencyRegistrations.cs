@@ -1,22 +1,32 @@
+using DataContracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace Data
+namespace Data;
+
+/// <summary>
+/// Зарегистрировать DbContext
+/// </summary>
+public static class DependencyRegistrations
 {
-    public static class DependencyRegistrations
+    /// <summary>
+    /// Зарегистрировать DbContext
+    /// </summary>
+    public static IServiceCollection AddPostgres(this IServiceCollection services)
     {
-        public static IServiceCollection AddPostgresData(this IServiceCollection services)
+        services.AddDbContext<AppDbContext>((provider, opt) =>
         {
-            services.AddDbContext<AppDbContext>((provider, opt) =>
+            var dataOptions = provider.GetRequiredService<IOptions<DataOptions>>().Value;
+            if (string.IsNullOrEmpty(dataOptions.ConnectionString))
             {
-                var options = provider.GetRequiredService<IOptions<DataOptions>>().Value;
+                throw new InvalidOperationException("ConnectionString is null or empty");
+            }
+            opt.UseNpgsql(dataOptions.ConnectionString, builder =>
+                builder.MigrationsHistoryTable("__EFMigrationsHistory", AppDbContext.ServiceSchema));
+        });
 
-                opt.UseNpgsql(options.ConnectionString,
-                    builder => builder.MigrationsHistoryTable("__EFMigrationsHistory", options.ServiceSchema));
-            });
-
-            return services;
-        }
+        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        return services;
     }
 }

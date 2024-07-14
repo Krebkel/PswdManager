@@ -1,4 +1,3 @@
-using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Contracts;
@@ -7,18 +6,23 @@ namespace Data;
 
 public class AppDbContext : DbContext
 {
-    private readonly IOptions<DataOptions> _dataOptions;
+    internal const string ServiceSchema = "PswdManager";
+    
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {}
+    
+    public DbSet<PasswordEntry> PasswordEntries { get; set; } = null!;
 
-    public DbSet<PasswordEntry> PasswordEntries { get; set; } = null!; 
- 
-    public AppDbContext(DbContextOptions<AppDbContext> options, IOptions<DataOptions> dataOptions) : base(options)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
-        _dataOptions = dataOptions;
+        builder.HasDefaultSchema(ServiceSchema);
+        
+        ConfigureEntities(builder);
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    private static void ConfigureEntities(ModelBuilder builder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        modelBuilder.HasDefaultSchema(_dataOptions.Value.ServiceSchema);
+        // Пароли
+        builder.Entity<PasswordEntry>();
     }
 }

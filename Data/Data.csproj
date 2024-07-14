@@ -29,6 +29,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Contracts\Contracts.csproj" />
+      <ProjectReference Include="..\DataContracts\DataContracts.csproj" />
     </ItemGroup>
 
 </Project>
